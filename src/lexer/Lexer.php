@@ -93,6 +93,7 @@ abstract class Lexer
         $this->reserve(new Word(Tag::T_INFIXL, 'infixl'));
         $this->reserve(new Word(Tag::T_INFIXR, 'infixr'));
         $this->reserve(new Word(Tag::T_PREFIX, 'prefix'));
+        $this->reserve(new Word(Tag::T_SUFFIX, 'suffix'));
     }
 
     private function reserve(Word $t)

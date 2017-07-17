@@ -344,7 +344,8 @@ class StmtParser
             Tag::T_NATIVE => '_nativeStmt',
             Tag::T_INFIXL => '_operatorStmt',
             Tag::T_INFIXR => '_operatorStmt',
-            Tag::T_PREFIX => '_operatorStmt'
+            Tag::T_PREFIX => '_operatorStmt',
+            Tag::T_SUFFIX => '_operatorStmt'
         ];
 
         $next_tag = $this->reader->lookahead->getTag();

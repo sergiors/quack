@@ -64,7 +64,7 @@ class MetaParser
         $type = $this->reader->lookahead->getTag();
         $this->reader->consume();
 
-        if ($type !== Tag::T_PREFIX) {
+        if ($type === Tag::T_INFIXL || $type === Tag::T_INFIXR) {
             $precedence = (int) $this->reader->resolveScope(
                 $this->reader->match(Tag::T_INTEGER)
             );

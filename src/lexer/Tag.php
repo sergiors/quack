@@ -86,6 +86,7 @@ class Tag
     const T_INFIXL = 315;
     const T_INFIXR = 316;
     const T_PREFIX = 317;
+    const T_SUFFIX = 318;
 
     public static function getOperatorLexeme($op)
     {

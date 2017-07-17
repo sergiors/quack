@@ -42,7 +42,8 @@ class OperatorStmt extends Stmt
         $names = [
             Tag::T_PREFIX => 'prefix ',
             Tag::T_INFIXL => 'infixl ',
-            Tag::T_INFIXR => 'infixr '
+            Tag::T_INFIXR => 'infixr ',
+            Tag::T_SUFFIX => 'suffix '
         ];
 
         $source = $names[$this->type];
