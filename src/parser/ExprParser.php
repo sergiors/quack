@@ -83,35 +83,35 @@ class ExprParser
         $this->register(Tag::T_WHEN, new WhenParselet);
         $this->register(Tag::T_WHERE, new WhereParselet);
 
-        $this->prefix('+', Precedence::PREFIX);
-        $this->prefix('-', Precedence::PREFIX);
-        $this->prefix('~', Precedence::PREFIX);
-        $this->prefix(Tag::T_NOT, Precedence::PREFIX);
+        // $this->prefix('+', Precedence::PREFIX);
+        // $this->prefix('-', Precedence::PREFIX);
+        // $this->prefix('~', Precedence::PREFIX);
+        // $this->prefix(Tag::T_NOT, Precedence::PREFIX);
 
-        $this->infixLeft('+', Precedence::ADDITIVE);
-        $this->infixLeft('-', Precedence::ADDITIVE);
-        $this->infixLeft('*', Precedence::MULTIPLICATIVE);
-        $this->infixLeft('/', Precedence::MULTIPLICATIVE);
-        $this->infixLeft(Tag::T_MOD, Precedence::MULTIPLICATIVE);
-        $this->infixLeft(Tag::T_AND, Precedence::LOGICAL_AND);
-        $this->infixLeft(Tag::T_OR, Precedence::LOGICAL_OR);
-        $this->infixLeft(Tag::T_XOR, Precedence::LOGICAL_XOR);
-        $this->infixLeft('|', Precedence::BITWISE_OR);
-        $this->infixLeft('&', Precedence::BITWISE_AND_OR_REF);
-        $this->infixLeft('^', Precedence::BITWISE_XOR);
-        $this->infixLeft('<<', Precedence::BITWISE_SHIFT);
-        $this->infixLeft('>>', Precedence::BITWISE_SHIFT);
-        $this->infixLeft('=', Precedence::VALUE_COMPARATOR);
-        $this->infixLeft('=~', Precedence::VALUE_COMPARATOR);
-        $this->infixLeft('<>', Precedence::VALUE_COMPARATOR);
-        $this->infixLeft('<=', Precedence::SIZE_COMPARATOR);
-        $this->infixLeft('<', Precedence::SIZE_COMPARATOR);
-        $this->infixLeft('>=', Precedence::SIZE_COMPARATOR);
-        $this->infixLeft('>', Precedence::SIZE_COMPARATOR);
-        $this->infixLeft('|>', Precedence::PIPELINE);
-        $this->infixLeft('??', Precedence::COALESCENCE);
+        // $this->infixLeft('+', Precedence::ADDITIVE);
+        // $this->infixLeft('-', Precedence::ADDITIVE);
+        // $this->infixLeft('*', Precedence::MULTIPLICATIVE);
+        // $this->infixLeft('/', Precedence::MULTIPLICATIVE);
+        // $this->infixLeft(Tag::T_MOD, Precedence::MULTIPLICATIVE);
+        // $this->infixLeft(Tag::T_AND, Precedence::LOGICAL_AND);
+        // $this->infixLeft(Tag::T_OR, Precedence::LOGICAL_OR);
+        // $this->infixLeft(Tag::T_XOR, Precedence::LOGICAL_XOR);
+        // $this->infixLeft('|', Precedence::BITWISE_OR);
+        // $this->infixLeft('&', Precedence::BITWISE_AND_OR_REF);
+        // $this->infixLeft('^', Precedence::BITWISE_XOR);
+        // $this->infixLeft('<<', Precedence::BITWISE_SHIFT);
+        // $this->infixLeft('>>', Precedence::BITWISE_SHIFT);
+        // $this->infixLeft('=', Precedence::VALUE_COMPARATOR);
+        // $this->infixLeft('=~', Precedence::VALUE_COMPARATOR);
+        // $this->infixLeft('<>', Precedence::VALUE_COMPARATOR);
+        // $this->infixLeft('<=', Precedence::SIZE_COMPARATOR);
+        // $this->infixLeft('<', Precedence::SIZE_COMPARATOR);
+        // $this->infixLeft('>=', Precedence::SIZE_COMPARATOR);
+        // $this->infixLeft('>', Precedence::SIZE_COMPARATOR);
+        // $this->infixLeft('|>', Precedence::PIPELINE);
+        // $this->infixLeft('??', Precedence::COALESCENCE);
 
-        $this->infixRight('**', Precedence::EXPONENT);
+        // $this->infixRight('**', Precedence::EXPONENT);
         $this->infixRight(':-', Precedence::ASSIGNMENT);
     }
 

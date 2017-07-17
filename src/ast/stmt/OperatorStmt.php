@@ -23,6 +23,7 @@ namespace QuackCompiler\Ast\Stmt;
 
 use \QuackCompiler\Lexer\Tag;
 use \QuackCompiler\Parser\Parser;
+use \QuackCompiler\Scope\Meta;
 
 class OperatorStmt extends Stmt
 {
@@ -60,8 +61,16 @@ class OperatorStmt extends Stmt
 
     public function injectScope(&$parent_scope)
     {
-        // TODO inject scope for operator stmt, check if operator is not
-        // previously defined in context
+        // TODO: Use Meta::M_OPERATOR;
+        // If already defined, error
+        // Else define
+        // TODO: Fix bug on setMeta and getMeta
+        // Putz! A meta needs a symbol to be chained! That's why!
+        // var_dump($parent_scope);
+        // $parent_scope->setMeta(Meta::M_OPERATOR, '+', '-');
+        // exit;
+        // TODO: Refactor scope to keep different tables for shapes, classes
+        // and everything else, allowing access O(1) by kind
     }
 
     public function runTypeChecker()

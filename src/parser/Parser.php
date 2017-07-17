@@ -34,6 +34,10 @@ abstract class Parser
     public $input;
     public $lookahead;
     public $scope_level = 0;
+    // Table for custom operators
+    public $prefix_operators = [];
+    public $infix_operators = [];
+    public $suffix_operators = [];
 
     public function __construct(Tokenizer $input)
     {
@@ -45,14 +49,14 @@ abstract class Parser
     {
         switch ($type) {
             case Tag::T_PREFIX:
-                $this->input->prefix_operators[$operator] = true;
+                $this->prefix_operators[$operator] = true;
                 break;
             case Tag::T_INFIXL:
             case Tag::T_INFIXR:
-                $this->input->infix_operators[$operator] = [$type, $precedence];
+                $this->infix_operators[$operator] = [$type, $precedence];
                 break;
             case Tag::T_SUFFIX:
-                $this->input->suffix_operators[$operator] = true;
+                $this->suffix_operators[$operator] = true;
         }
     }
 

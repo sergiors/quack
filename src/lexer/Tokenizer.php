@@ -26,11 +26,6 @@ class Tokenizer extends Lexer
     public $line = 1;
     public $column = 0;
 
-    // Table for custom operators
-    public $prefix_operators = [];
-    public $infix_operators = [];
-    public $suffix_operators = [];
-
     public function __construct($input)
     {
         parent::__construct($input);
@@ -119,7 +114,7 @@ class Tokenizer extends Lexer
         }
 
         // Try all reserved symbols before going to operator
-        $reserved = ['..', '.', '%', '->'];
+        $reserved = ['..', '.', '%', '->', '::', ':-', ':'];
         foreach ($reserved as $operator) {
             if ($this->matches($operator)) {
                 $size = strlen($operator);

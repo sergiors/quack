@@ -125,6 +125,8 @@ function readline_callback($command)
     $lexer = new Tokenizer($run_command);
     $parser = new TokenReader($lexer);
 
+    // TODO: IMPORTANT: SHOULD PRESERVE THE $prefix/infix/suffix operators from
+    // parser!!!
     try {
         $parser->parse();
         // attachValidAST will injectScope and run type checker automatically
