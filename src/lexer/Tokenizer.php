@@ -75,6 +75,15 @@ class Tokenizer extends Lexer
                 return $this->regex();
             }
 
+            $reserved = ['&{', '&(', '#(', '#{', '%{', '->', '::', ':-', '..'];
+            foreach ($reserved as $operator) {
+                if ($this->matches($operator)) {
+                    $this->consume(2);
+                    $this->column += 2;
+                    return new Token($operator);
+                }
+            }
+
             // Multichar symbol analysis
             return SymbolDecypher::{$this->peek}($this);
         }

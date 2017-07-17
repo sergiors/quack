@@ -33,8 +33,6 @@ class SymbolDecypher
                 return static::tryMatch($context, ['<<', '<>', '<=']);
             case '>':
                 return static::tryMatch($context, ['>>', '>=', '>>']);
-            case ':':
-                return static::tryMatch($context, ['::', ':-']);
             case '?':
                 return static::tryMatch($context, ['?.', '??']);
             case '*':
@@ -43,16 +41,6 @@ class SymbolDecypher
                 return static::tryMatch($context, ['=~']);
             case '|':
                 return static::tryMatch($context, ['|>']);
-            case '-':
-                return static::tryMatch($context, ['->']);
-            case '&':
-                return static::tryMatch($context, ['&{', '&(']);
-            case '.':
-                return static::tryMatch($context, ['...', '..']);
-            case '#':
-                return static::tryMatch($context, ['#{', '#(']);
-            case '%':
-                return static::tryMatch($context, ['%{']);
             default:
                 return static::fetch($context, $context->peek);
         }
