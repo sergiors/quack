@@ -75,35 +75,29 @@ class Tokenizer extends Lexer
                 return $this->regex();
             }
 
-            return $this->operator();
+            return $this->other();
         }
 
         return new Token(self::EOF_TYPE);
     }
 
-    private function isValidOperatorChar($char)
+    public function isValidOperatorChar($char)
     {
         $operators = [
             '!', '@', '#', '$', '%', '*', '-', '+', '=', '_', '^', '~',
             '<', '>', '.', ':', '?', '/', ',', '|', '\\', '&'
         ];
-
         return in_array($char, $operators, true);
+    }
+
+    public function isReservedOperator($operator)
+    {
+        $reserved = ['::', '.', ':-', '->', '..', '%', '&'];
+        return in_array($operator, $reserved, true);
     }
 
     public function operator()
     {
-        $openers = ['&{', '&(', '#(', '#{', '%{', ];
-
-        // Try all openers before everything
-        foreach ($openers as $operator) {
-            if ($this->matches($operator)) {
-                $this->consume(2);
-                $this->column += 2;
-                return new Token($operator);
-            }
-        }
-
         $operator = '';
         $operator_size = 0;
         while ($this->isValidOperatorChar($this->peek)) {
@@ -112,8 +106,24 @@ class Tokenizer extends Lexer
             $this->column++;
         }
 
-        if ($operator_size > 0) {
-            return new Token($operator);
+        return $operator_size > 0 ? new Token($operator) : null;
+    }
+
+    public function other()
+    {
+        $openers = ['&{', '&(', '#(', '#{', '%{', ];
+
+        // Try all openers before everything
+        foreach ($openers as $opener) {
+            if ($this->matches($opener)) {
+                $this->consume(2);
+                $this->column += 2;
+                return new Token($opener);
+            }
+        }
+
+        if ($operator = $this->operator()) {
+            return $operator;
         }
 
         // Edge-case, consume the symbol and return it as a token

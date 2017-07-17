@@ -133,11 +133,11 @@ abstract class Parser
     public function nextValidOperator()
     {
         $operator = "";
-        while ($this->isValidOperatorChar($this->lookahead->getTag())) {
+        while ($this->input->isValidOperatorChar($this->lookahead->getTag())) {
             $operator .= $this->consumeAndFetch()->getTag();
         }
 
-        if (0 === strlen($operator) || $this->isReservedOperator($operator)) {
+        if (0 === strlen($operator) || $this->input->isReservedOperator($operator)) {
             throw new SyntaxError([
                 'expected' => 'custom operator',
                 'found'    => $this->lookahead,
@@ -176,23 +176,5 @@ abstract class Parser
     public function dedent()
     {
         return str_repeat('  ', max(0, $this->scope_level - 1));
-    }
-
-    // TODO: Remove repeated. Use from lexer
-    public function isValidOperatorChar($char)
-    {
-        $operators = [
-            '!', '@', '#', '$', '%', '*', '-', '+', '=', '_', '^', '~',
-            '<', '>', '.', ':', '?', '/', ',', '|', '\\', '&'
-        ];
-
-        return in_array($char, $operators, true);
-    }
-
-    public function isReservedOperator($operator)
-    {
-        $reserved = ['::', '.', ':-', '->'];
-
-        return in_array($operator, $reserved, true);
     }
 }
