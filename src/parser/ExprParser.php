@@ -76,7 +76,6 @@ class ExprParser
         $this->register('&', new LambdaParselet);
         $this->register('%', new NewParselet);
         $this->register('.', new MemberAccessParselet);
-        $this->register('?.', new MemberAccessParselet);
         $this->register(Tag::T_TRUE, new LiteralParselet);
         $this->register(Tag::T_FALSE, new LiteralParselet);
         $this->register(Tag::T_NIL, new LiteralParselet);
