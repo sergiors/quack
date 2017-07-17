@@ -114,7 +114,7 @@ class Tokenizer extends Lexer
         }
 
         // Try all reserved symbols before going to operator
-        $reserved = ['..', '.', '%', '->', '::', ':-', ':'];
+        $reserved = ['..', '.', '%', '->', '::', ':-', ':', ','];
         foreach ($reserved as $operator) {
             if ($this->matches($operator)) {
                 $size = strlen($operator);
