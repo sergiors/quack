@@ -39,7 +39,6 @@ import(INTL, 'Localization');
 /* Lexer */
 
 import(LEXER, 'Lexer');
-import(LEXER, 'SymbolDecypher');
 import(LEXER, 'SymbolTable');
 import(LEXER, 'Tag');
 import(LEXER, 'Token');

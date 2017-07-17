@@ -178,6 +178,7 @@ abstract class Parser
         return str_repeat('  ', max(0, $this->scope_level - 1));
     }
 
+    // TODO: Remove repeated. Use from lexer
     public function isValidOperatorChar($char)
     {
         $operators = [

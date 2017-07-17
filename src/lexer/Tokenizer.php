@@ -75,21 +75,50 @@ class Tokenizer extends Lexer
                 return $this->regex();
             }
 
-            $reserved = ['&{', '&(', '#(', '#{', '%{', '->', '::', ':-', '..', '%', '.', '&'];
-            foreach ($reserved as $operator) {
-                if ($this->matches($operator)) {
-                    $size = strlen($operator);
-                    $this->consume($size);
-                    $this->column += $size;
-                    return new Token($operator);
-                }
-            }
-
-            // Multichar symbol analysis
-            return SymbolDecypher::{$this->peek}($this);
+            return $this->operator();
         }
 
         return new Token(self::EOF_TYPE);
+    }
+
+    private function isValidOperatorChar($char)
+    {
+        $operators = [
+            '!', '@', '#', '$', '%', '*', '-', '+', '=', '_', '^', '~',
+            '<', '>', '.', ':', '?', '/', ',', '|', '\\', '&'
+        ];
+
+        return in_array($char, $operators, true);
+    }
+
+    public function operator()
+    {
+        $openers = ['&{', '&(', '#(', '#{', '%{', ];
+
+        // Try all openers before everything
+        foreach ($openers as $operator) {
+            if ($this->matches($operator)) {
+                $this->consume(2);
+                $this->column += 2;
+                return new Token($operator);
+            }
+        }
+
+        $operator = '';
+        $operator_size = 0;
+        while ($this->isValidOperatorChar($this->peek)) {
+            $operator .= $this->readChar();
+            $operator_size++;
+            $this->column++;
+        }
+
+        if ($operator_size > 0) {
+            return new Token($operator);
+        }
+
+        // Edge-case, consume the symbol and return it as a token
+        $this->column++;
+        return new Token($this->readChar());
     }
 
     public function digit()
