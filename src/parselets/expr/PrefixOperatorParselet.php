@@ -25,24 +25,27 @@ use \QuackCompiler\Ast\Expr\PrefixExpr;
 use \QuackCompiler\Lexer\Token;
 use \QuackCompiler\Parselets\PrefixParselet;
 use \QuackCompiler\Parser\Grammar;
+use \QuackCompiler\Parser\Precedence;
 
 class PrefixOperatorParselet implements PrefixParselet
 {
-    public $precedence;
+    private $reader;
 
-    public function __construct($precedence)
+    public function __construct($reader)
     {
-        $this->precedence = $precedence;
+        $this->reader = $reader;
     }
 
     public function parse($parser, Token $token)
     {
-        $operand = $parser->_expr($this->precedence);
-        return new PrefixExpr($token, $operand);
-    }
+        // TODO: kill resolveScope, make everything cleaner. Have a custom error
+        // for operators
+        $operator = $this->reader->resolveScope($token->getPointer());
+        if (!isset($this->reader->prefix_operators[$operator])) {
+            // throw new \Exception('Undeclared operator ' . $operator);
+        }
 
-    public function getPrecedence()
-    {
-        return $this->precedence;
+        $operand = $parser->_expr(Precedence::PREFIX);
+        return new PrefixExpr($token, $operand);
     }
 }

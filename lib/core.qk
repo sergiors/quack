@@ -45,6 +45,8 @@ infixl 18 &(/)
 
 infixr 22 &(**)
 
+do +(+1)
+
 -- native class number
 --     &(+)() -> number
 --     &(-)() -> number

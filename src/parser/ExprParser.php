@@ -83,6 +83,9 @@ class ExprParser
         $this->register(Tag::T_WHEN, new WhenParselet);
         $this->register(Tag::T_WHERE, new WhereParselet);
 
+        // Custom prefix operators
+        $this->register(Tag::T_OPERATOR, new PrefixOperatorParselet($reader));
+
         // $this->prefix('+', Precedence::PREFIX);
         // $this->prefix('-', Precedence::PREFIX);
         // $this->prefix('~', Precedence::PREFIX);
