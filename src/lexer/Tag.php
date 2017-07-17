@@ -37,6 +37,7 @@ class Tag
     const T_STRING = 600;
     const T_ATOM = 601;
     const T_REGEX = 1001;
+    const T_OPERATOR = 1002;
 
     /* Keywords */
     const T_TRUE = 260;

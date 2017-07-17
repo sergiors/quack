@@ -81,8 +81,11 @@ class DeclParser
         $type = null;
 
         if ($this->reader->consumeIf('&(')) {
-            $name = '&(' . $this->reader->nextValidOperator() . ')';
+            $operator = $this->reader->resolveScope(
+                $this->reader->match(Tag::T_OPERATOR)
+            );
             $this->reader->match(')');
+            $name = '&(' . $operator. ')';
         } else {
             $name = $this->name_parser->_identifier();
         }
@@ -97,11 +100,9 @@ class DeclParser
         }
 
         if ($this->reader->consumeIf('->')) {
-            // TODO: See what to do with this type
             $type = $this->type_parser->_type();
         }
 
-        // TODO: This should be a node and all the usages too!
         return new FnSignatureStmt($name, $parameters, $type);
     }
 

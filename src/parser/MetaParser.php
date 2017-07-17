@@ -71,7 +71,7 @@ class MetaParser
         }
 
         $this->reader->match('&(');
-        $operator = $this->reader->nextValidOperator();
+        $operator = $this->reader->resolveScope($this->reader->match(Tag::T_OPERATOR));
         $this->reader->match(')');
 
         // Register the custom operator on lexer

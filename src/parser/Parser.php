@@ -130,24 +130,6 @@ abstract class Parser
         return $clone;
     }
 
-    public function nextValidOperator()
-    {
-        $operator = "";
-        while ($this->input->isValidOperatorChar($this->lookahead->getTag())) {
-            $operator .= $this->consumeAndFetch()->getTag();
-        }
-
-        if (0 === strlen($operator) || $this->input->isReservedOperator($operator)) {
-            throw new SyntaxError([
-                'expected' => 'custom operator',
-                'found'    => $this->lookahead,
-                'parser'   => $this,
-            ]);
-        }
-
-        return $operator;
-    }
-
     public function resolveScope($pointer)
     {
         return $this->input->getSymbolTable()->get($pointer);

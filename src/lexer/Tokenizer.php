@@ -90,12 +90,6 @@ class Tokenizer extends Lexer
         return in_array($char, $operators, true);
     }
 
-    public function isReservedOperator($operator)
-    {
-        $reserved = ['::', '.', ':-', '->', '..', '%', '&'];
-        return in_array($operator, $reserved, true);
-    }
-
     public function operator()
     {
         $operator = '';
@@ -106,12 +100,14 @@ class Tokenizer extends Lexer
             $this->column++;
         }
 
-        return $operator_size > 0 ? new Token($operator) : null;
+        return $operator_size > 0
+            ? new Token(Tag::T_OPERATOR, $this->symbol_table->add($operator))
+            : null;
     }
 
     public function other()
     {
-        $openers = ['&{', '&(', '#(', '#{', '%{', ];
+        $openers = ['&{', '&(', '#(', '#{', '%{'];
 
         // Try all openers before everything
         foreach ($openers as $opener) {
@@ -122,6 +118,18 @@ class Tokenizer extends Lexer
             }
         }
 
+        // Try all reserved symbols before going to operator
+        $reserved = ['..', '.', '%', '->'];
+        foreach ($reserved as $operator) {
+            if ($this->matches($operator)) {
+                $size = strlen($operator);
+                $this->consume($size);
+                $this->column += $size;
+                return new Token($operator);
+            }
+        }
+
+        // Return a token wrapped by Tag::T_OPERATOR to distinguish on parselets
         if ($operator = $this->operator()) {
             return $operator;
         }

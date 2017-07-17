@@ -44,21 +44,9 @@ class ClassStmt extends Stmt
         $source .= PHP_EOL;
         $parser->openScope();
 
-        foreach ($this->body as $sign) {
+        foreach ($this->body as $signature) {
             $source .= $parser->indent();
-            $source .= $sign->name;
-            $source .= '(';
-            $source .= implode(', ', array_map(function ($param) {
-                $parameter = $param->name;
-
-                if (!is_null($param->type)) {
-                    $parameter .= ' :: ' . $param->type;
-                }
-
-                return $parameter;
-            }, $sign->parameters));
-
-            $source .= ')';
+            $source .= $signature->format($parser);
             $source .= PHP_EOL;
         }
 
