@@ -75,11 +75,12 @@ class Tokenizer extends Lexer
                 return $this->regex();
             }
 
-            $reserved = ['&{', '&(', '#(', '#{', '%{', '->', '::', ':-', '..'];
+            $reserved = ['&{', '&(', '#(', '#{', '%{', '->', '::', ':-', '..', '%', '.', '&'];
             foreach ($reserved as $operator) {
                 if ($this->matches($operator)) {
-                    $this->consume(2);
-                    $this->column += 2;
+                    $size = strlen($operator);
+                    $this->consume($size);
+                    $this->column += $size;
                     return new Token($operator);
                 }
             }
