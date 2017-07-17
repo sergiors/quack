@@ -74,6 +74,8 @@ class MetaParser
         $operator = $this->reader->nextValidOperator();
         $this->reader->match(')');
 
+        // Register the custom operator on lexer
+        $this->reader->registerCustomOperator($type, $operator, $precedence);
         return new OperatorStmt($type, $operator, $precedence);
     }
 }
