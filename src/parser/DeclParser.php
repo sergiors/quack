@@ -157,18 +157,18 @@ class DeclParser
     public function _shapeStmt()
     {
         $this->reader->match(Tag::T_SHAPE);
-        $name = $this->name_parser->_identifier();
+        $shape_name = $this->name_parser->_identifier();
         $members = [];
 
         while ($this->reader->is(Tag::T_IDENT)) {
-            $members[] = $this->name_parser->_identifier();
-            // TODO: Bind type for member
+            $name = $this->name_parser->_identifier();
             $this->reader->match('::');
             $type = $this->type_parser->_type();
+            $members[$name] = $type;
         }
 
         $this->reader->match(Tag::T_END);
 
-        return new ShapeStmt($name, $members);
+        return new ShapeStmt($shape_name, $members);
     }
 }

@@ -21,11 +21,11 @@
  */
 namespace QuackCompiler\Ast\Stmt;
 
+use \QuackCompiler\Ast\Types\ObjectType;
 use \QuackCompiler\Intl\Localization;
 use \QuackCompiler\Parser\Parser;
-use \QuackCompiler\Scope\Scope;
-use \QuackCompiler\Scope\ScopeError;
 use \QuackCompiler\Scope\Kind;
+use \QuackCompiler\Scope\Meta;
 
 class ShapeStmt extends Stmt
 {
@@ -46,9 +46,9 @@ class ShapeStmt extends Stmt
 
         $parser->openScope();
 
-        foreach ($this->members as $member) {
+        foreach ($this->members as $name => $type) {
             $source .= $parser->indent();
-            $source .= $member;
+            $source .= $name . ' :: ' . $type;
             $source .= PHP_EOL;
         }
 
@@ -61,21 +61,15 @@ class ShapeStmt extends Stmt
         return $source;
     }
 
-    public function injectScope(&$parent_scope)
+    public function injectScope(&$parent)
     {
-        $this->scope = new Scope($parent_scope);
-
-        foreach ($this->members as $member) {
-            if ($this->scope->hasLocal($member)) {
-                throw new ScopeError(Localization::message('SCO110', [$member, $this->name]));
-            }
-
-            $this->scope->insert($member, Kind::K_INITIALIZED | Kind::K_MEMBER);
-        }
+        $this->scope = $parent;
+        $this->scope->insert($this->name, Kind::K_SHAPE | Kind::K_VARIABLE);
     }
 
     public function runTypeChecker()
     {
-        // TODO: Implement type checking for shape
+        $type = new ObjectType($this->members);
+        $this->scope->setMeta(Meta::M_TYPE, $this->name, $type);
     }
 }

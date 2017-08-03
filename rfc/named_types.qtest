@@ -1,0 +1,31 @@
+%%command
+php ./src/Quack.php %s
+%%source
+shape Person
+  name :: string
+  age :: number
+end
+%%expect
+array(1) {
+  [0]=>
+  string(42) "%{current: string, next: LinkedStringList}"
+}
+%%expect
+shape Person
+  name :: string
+  age :: number
+end
+%%source
+shape LinkedStringList
+  current :: string
+  next :: LinkedStringList
+end
+%%expect
+shape LinkedStringList
+  current :: string
+  next :: LinkedStringList
+end
+%%source
+do LinkedStringList
+%%expect
+do LinkedStringList
