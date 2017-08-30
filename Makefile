@@ -13,10 +13,9 @@ count_lines:
 configure:
 	pip install --user hy==0.11.1
 	pip install --user termcolor
-	pear install PHP_CodeSniffer
 
 lint:
-	phpcs --standard=PSR2 ./src/*
+	./vendor/bin/phpcs --standard=PSR2 ./src/*
 
 todo:
 	grep -r 'TODO' src/
